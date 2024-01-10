@@ -23,7 +23,9 @@ int main(int argc, char *argv[]){
             fprintf(stdout, "%s\n", buffer);
         }
     
-        fclose(fp);
+        if (argc > 1){
+            fclose(fp);
+        }
         ++currentFileIndex;
     }
 
