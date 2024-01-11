@@ -33,6 +33,8 @@ int main(int argc, char *argv[]){
         count++;
     }
 
+    fclose(fp);
+
     return 1;
     
 }
