@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
+
 int main(int argc, char *argv[]){
 
     FILE *fp;
@@ -19,7 +21,7 @@ int main(int argc, char *argv[]){
     }
     
     fp = fopen(argv[optind], "rb");
-    if (fp == NULL){
+    if (fp == NULL && argc != optind){
         fprintf(stderr, "No such file or directory %s\n", argv[optind]);
         exit(-1);
     }
@@ -28,12 +30,13 @@ int main(int argc, char *argv[]){
     char * line = NULL;
     size_t count = 0;
     size_t len = 0;
-    while ((getline(&line, &len, fp)) != -1 && count < line_count) {
+    while ((getline(&line, &len, (fp == NULL ? stdin : fp))) != -1 && count < line_count) {
         printf("%s", line);
         count++;
     }
 
-    fclose(fp);
+    if (argc != optind)
+        fclose(fp);
 
     return 1;
     
